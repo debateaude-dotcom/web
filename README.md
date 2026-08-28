@@ -10,25 +10,27 @@ La carpeta se sube tal cual.
 index.html            Portada
 quienes-somos.html    Historia, junta directiva y logros
 que-hacemos.html      El programa paso a paso
+crono.html            Cronómetro de debate para torneos
 contacto.html         Único punto de contacto: vías directas + formulario
 gracias.html          Confirmación para quien navega sin JavaScript
 404.html              Página de error (Cloudflare Pages la usa sola)
 
 styles.css            Hoja de estilos única de todo el sitio
 js/main.js            Menú móvil y año del pie
-js/forms.js           Validación y envío de los formularios
+js/forms.js           Validación y envío del formulario
+js/crono.js           Lógica del cronómetro de debate
 
 assets/
-  logo-aude.svg       Lockup completo sobre fondo claro
-  logo-negativo.svg   Lockup para fondo morado (se usa en el pie)
-  logo-inline.svg     Lockup cuyo wordmark hereda el color del texto
-  isotipo-aude.svg    Sólo el monograma DA
-  isotipo-inline.svg  Monograma que hereda el color
-  isotipo-tile.svg    Monograma en cuadrado morado (marca de la cabecera)
-  favicon.svg         El mismo cuadrado, como icono de pestaña
+  logo-aude.svg       Lockup completo, colores oficiales
+  logo-negativo.svg   El mismo, para fondo morado (se usa en el pie)
+  logo-negro.svg      Versión en negro, para impresión o fondos planos
+  isotipo-aude.svg    Sólo el monograma DA (se usa en la cabecera)
+  favicon.svg         Monograma sobre cuadrado morado, icono de pestaña
   zigzag.svg          Motivo gráfico del manual
   og-debate-aude.png  Imagen para redes sociales, 1200×630
   img/                Fotografías del sitio (ver FOTOS.md)
+  img/logo-color.svg  Original que entregó la asociación, sin tocar
+  img/logo-negro.svg  Ídem, versión negra
 
 robots.txt  sitemap.xml  _headers
 FORMSPREE.md          Alta en Formspree y dónde pegar el endpoint
@@ -55,13 +57,13 @@ Formspree) y los plazos de caché.
 
 ## Antes de publicar
 
-Hay tres cosas pendientes de datos reales. Están marcadas en el código
-para que sea imposible desplegarlas por descuido:
+Queda esto por cerrar. Está marcado en el código para que sea imposible
+desplegarlo por descuido:
 
 | Qué                | Dónde                                   | Estado |
 |--------------------|------------------------------------------|--------|
 | Endpoint Formspree | `contacto.html`, `XXXXXXXX` en el `action` | pendiente — ver `FORMSPREE.md` |
-| Fotografías reales | `assets/img/` | pendiente — ver `FOTOS.md` |
+| Retratos de la junta | `assets/img/junta/` | pendiente, se ven las iniciales — ver `FOTOS.md` |
 
 Para encontrarlos:
 
@@ -113,3 +115,21 @@ Si tocas los colores, comprueba el contraste antes de publicar. En especial
 el amarillo y el morado claro del manual: sobre fondo claro no llegan ni de
 lejos al mínimo, y por eso aquí sólo aparecen como fondo de banda o dentro
 del logo, nunca como texto.
+
+## El cronómetro
+
+`crono.html` es una herramienta para usar durante los torneos, pensada para
+proyectarse en el aula. Nombres de los equipos y duración de cada turno se
+escriben en la propia página y **se guardan en el navegador**, así que quedan
+puestos para la siguiente vez (cada dispositivo guarda los suyos).
+
+El reloj no va restando de un intervalo, que se retrasa cuando la pestaña
+pierde el foco: guarda el instante de arranque y calcula la diferencia contra
+el reloj del sistema. Así no regala segundos aunque el navegador se duerma.
+
+Colores del reloj: amarillo mientras hay tiempo, naranja en los últimos diez
+segundos, y rojo con cuenta ascendente en negativo al pasarse.
+
+Atajos: **espacio** empieza o pausa, **R** reinicia, **←** y **→** pasan el
+turno de un equipo al otro. El botón de pantalla completa deja sólo el
+tablero, que es como conviene proyectarlo.

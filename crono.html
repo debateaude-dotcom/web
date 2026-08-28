@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronómetro de debate · Debate Aude</title>
+<meta name="description" content="Cronómetro para torneos de debate: tiempos configurables por turno, aviso en los últimos segundos y cuenta en negativo al pasarse.">
+<link rel="canonical" href="https://debateaude.com/crono.html">
+<meta name="theme-color" content="#6C2BE0">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Debate Aude">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Cronómetro de debate · Debate Aude">
+<meta property="og:description" content="Cronómetro para torneos de debate, con tiempos configurables por turno.">
+<meta property="og:url" content="https://debateaude.com/crono.html">
+<meta property="og:image" content="https://debateaude.com/assets/og-debate-aude.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Debate Aude — debate y oratoria gratis en institutos públicos">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Montserrat:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido principal</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a class="marca" href="/"><img class="marca__iso" src="/assets/isotipo-aude.svg" alt="" width="120" height="79"><span class="marca__texto">Debate Aude</span></a>
+    <nav aria-label="Principal">
+      <button class="nav__boton" type="button" id="nav-boton" aria-expanded="false" aria-controls="nav-lista" hidden>
+        <span class="barras" aria-hidden="true"></span><span class="nav__boton__txt">Menú</span>
+      </button>
+      <ul class="nav__lista" id="nav-lista">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/quienes-somos.html">Quiénes somos</a></li>
+        <li><a href="/que-hacemos.html">Qué hacemos</a></li>
+        <li><a href="/crono.html" aria-current="page">Cronómetro</a></li>
+        <li><a class="boton boton--primario" href="/contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="contenido" class="crono">
+
+<div class="contenedor">
+  <div class="crono-intro">
+    <p class="rotulo">Herramienta para torneos</p>
+    <h1>Cronómetro de debate</h1>
+    <p class="entradilla">Pon los nombres de los equipos, ajusta los tiempos del
+    torneo y dale a empezar. En los últimos diez segundos el reloj se pone
+    naranja, y si os pasáis sigue contando en rojo.</p>
+  </div>
+
+  <!-- ===================== TABLERO ===================== -->
+  <section class="tablero" id="crono-tablero" data-estado="normal" data-lado="favor"
+           data-marcha="no" aria-label="Cronómetro">
+
+    <div class="tablero__equipos">
+      <div class="equipo equipo--favor">
+        <p class="equipo__papel">A favor</p>
+        <label class="solo-lectores" for="nombre-favor">Nombre del equipo a favor</label>
+        <input class="equipo__nombre" id="nombre-favor" type="text" maxlength="40"
+               autocomplete="off" spellcheck="false" placeholder="Equipo a favor">
+        <button class="equipo__turno" type="button" id="lado-favor" aria-pressed="true">
+          Le toca hablar
+        </button>
+      </div>
+
+      <div class="equipo equipo--contra">
+        <p class="equipo__papel">En contra</p>
+        <label class="solo-lectores" for="nombre-contra">Nombre del equipo en contra</label>
+        <input class="equipo__nombre" id="nombre-contra" type="text" maxlength="40"
+               autocomplete="off" spellcheck="false" placeholder="Equipo en contra">
+        <button class="equipo__turno" type="button" id="lado-contra" aria-pressed="false">
+          Le toca hablar
+        </button>
+      </div>
+    </div>
+
+    <div class="tablero__reloj">
+      <p class="tablero__turno" id="crono-turno-activo">Introducción</p>
+      <p class="tablero__cifra" id="crono-pantalla" role="timer" aria-live="off">4:00</p>
+      <p class="solo-lectores" id="crono-aviso" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="tablero__mandos">
+      <button class="crono-boton crono-boton--principal" type="button" id="crono-play"
+              data-accion="play" aria-label="Empezar el cronómetro">
+        <span class="crono-boton__txt">Empezar</span>
+      </button>
+      <button class="crono-boton" type="button" id="crono-reset">Reiniciar</button>
+      <button class="crono-boton" type="button" id="crono-pantalla-completa" aria-pressed="false">
+        Pantalla completa
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================== TURNOS ===================== -->
+  <section class="crono-bloque" aria-labelledby="turnos-titulo">
+    <h2 id="turnos-titulo" class="crono-bloque__titulo">Turno</h2>
+    <div class="turnos" role="group" aria-label="Elegir turno">
+      <button class="turno" type="button" data-turno="introduccion" aria-pressed="true">Introducción</button>
+      <button class="turno" type="button" data-turno="refutacion1" aria-pressed="false">Refutación 1</button>
+      <button class="turno" type="button" data-turno="refutacion2" aria-pressed="false">Refutación 2</button>
+      <button class="turno" type="button" data-turno="conclusion" aria-pressed="false">Conclusión</button>
+    </div>
+    <p class="crono-nota">Al cambiar de turno el cronómetro se reinicia solo.</p>
+  </section>
+
+  <!-- ===================== TIEMPOS ===================== -->
+  <section class="crono-bloque" aria-labelledby="tiempos-titulo">
+    <h2 id="tiempos-titulo" class="crono-bloque__titulo">Tiempos del torneo</h2>
+    <div class="tiempos">
+      <div class="campo">
+        <label for="t-introduccion">Introducción</label>
+        <input id="t-introduccion" data-duracion="introduccion" type="text"
+               inputmode="numeric" autocomplete="off" aria-describedby="ayuda-tiempos">
+      </div>
+      <div class="campo">
+        <label for="t-refutacion1">Refutación 1</label>
+        <input id="t-refutacion1" data-duracion="refutacion1" type="text"
+               inputmode="numeric" autocomplete="off" aria-describedby="ayuda-tiempos">
+      </div>
+      <div class="campo">
+        <label for="t-refutacion2">Refutación 2</label>
+        <input id="t-refutacion2" data-duracion="refutacion2" type="text"
+               inputmode="numeric" autocomplete="off" aria-describedby="ayuda-tiempos">
+      </div>
+      <div class="campo">
+        <label for="t-conclusion">Conclusión</label>
+        <input id="t-conclusion" data-duracion="conclusion" type="text"
+               inputmode="numeric" autocomplete="off" aria-describedby="ayuda-tiempos">
+      </div>
+    </div>
+    <p class="crono-nota" id="ayuda-tiempos">Escribe minutos y segundos, por ejemplo
+    <strong>4:30</strong>. Los tiempos y los nombres de los equipos se guardan en este
+    navegador, así que el año que viene siguen puestos.</p>
+  </section>
+
+  <section class="crono-bloque" aria-labelledby="atajos-titulo">
+    <h2 id="atajos-titulo" class="crono-bloque__titulo">Atajos de teclado</h2>
+    <ul class="atajos">
+      <li><kbd>Espacio</kbd> empezar o pausar</li>
+      <li><kbd>R</kbd> reiniciar</li>
+      <li><kbd>←</kbd> turno del equipo a favor</li>
+      <li><kbd>→</kbd> turno del equipo en contra</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__rejilla">
+      <div>
+        <a class="marca marca--pie" href="/" aria-label="Debate Aude · inicio"><img src="/assets/logo-negativo.svg" alt="Debate Aude" width="200" height="178"></a>
+        <p class="pie__lema">Asociación juvenil sin ánimo de lucro. Llevamos formación
+        gratuita en debate y oratoria a los institutos públicos.</p>
+      </div>
+      <div>
+        <h2>Navegación</h2>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/quienes-somos.html">Quiénes somos</a></li>
+          <li><a href="/que-hacemos.html">Qué hacemos</a></li>
+          <li><a href="/crono.html">Cronómetro</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Escríbenos</h2>
+        <ul>
+          <li><a href="mailto:debateaude@gmail.com">debateaude@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/debateaude/" rel="me noopener">Instagram @debateaude</a></li>
+          <li><a href="https://www.linkedin.com/company/debate-aude/" rel="me noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pie__legal">
+      <p>© <span id="anyo">2026</span> Debate Aude</p>
+      <p>Hecho sin cookies ni rastreadores.</p>
+    </div>
+  </div>
+</footer>
+<script src="/js/main.js" defer></script>
+<script src="/js/crono.js" defer></script>
+</body>
+</html>

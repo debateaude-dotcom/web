@@ -3,5 +3,6 @@
   <url><loc>https://debateaude.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
   <url><loc>https://debateaude.com/quienes-somos.html</loc><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://debateaude.com/que-hacemos.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://debateaude.com/crono.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://debateaude.com/contacto.html</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
 </urlset>

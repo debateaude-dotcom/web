@@ -25,21 +25,42 @@ foto recién salida del móvil pesa 4-6 MB y hundiría la velocidad del sitio.
 
 ## Fotos de escena
 
-Estas cinco ya las tenéis. La columna «Tu archivo» es la foto que me indicaste;
-solo hay que **renombrarla** al nombre de la primera columna y subirla.
+**Ya están puestas.** Recortadas al encuadre de cada hueco y comprimidas a
+menos de 155 KB cada una; los originales venían a 14-16 MB, que habrían
+hundido la velocidad del sitio.
 
-| Archivo del sitio | Tu archivo | Medidas | Dónde sale |
-|---|---|---|---|
-| `portada.jpg` | `JTG_3035` | 1600 × 900 | Portada, a todo el ancho. Grupo en el césped de Butarque. |
-| `torneo.jpg` | `JTG_1520` | 1500 × 1000 | Quiénes somos, junto a los logros. La global en CUNEF. |
-| `equipo.jpg` | `JTG_3049` | 1600 × 900 | Quiénes somos, a todo el ancho. El equipo junto al roll-up. |
-| `inclusion.jpg` | `WhatsApp Image 2024-02-19 at 20.51.16` | 1200 × 900 | Qué hacemos, tras las tres tarjetas. Colaboración con Down Madrid. |
-| `formadores.jpg` | `WhatsApp Image 2023-06-03 at 12.33.48 (1).jpeg` | 1200 × 900 | Qué hacemos, a todo el ancho. Formador en clase. |
-| `programa.jpg` | **falta** | 1200 × 900 | Portada, sección final. Alumnado de un instituto público en plena sesión, dentro del aula. Es la única que sigue pendiente, y es la que mejor demuestra lo que hacéis. |
+| Archivo del sitio | Original | Dónde sale |
+|---|---|---|
+| `portada.jpg` | JTG_3035 | Portada, a todo el ancho. Grupo en el césped de Butarque. |
+| `aula.jpg` | WhatsApp 2023-06-03 | Portada, sección final. Sesión dentro del aula. |
+| `historia.jpg` | JTG_2931 | Quiénes somos, junto al relato de los orígenes. |
+| `equipo.jpg` | JTG_3049 | Quiénes somos, a todo el ancho. El equipo junto al roll-up. |
+| `torneo.jpg` | JTG_3064 | Quiénes somos, junto a los logros. Equipo campeón. |
+| `cunef.jpg` | JTG_1520 | Qué hacemos, a todo el ancho. La global en CUNEF. |
+| `inclusion.jpg` | WhatsApp 2024-02-19 | Qué hacemos, tras las tres tarjetas. Down Madrid. |
 
-Las medidas son orientativas: lo que importa es **la proporción**. Si la foto
-es más grande, mejor; el navegador la ajusta. Si es bastante más apaisada o
-más cuadrada que lo indicado, se recortará por el centro.
+### Sin colocar todavía
+
+Están procesadas y listas en `assets/img/`, esperando sitio:
+
+| Archivo | Qué es |
+|---|---|
+| `extra-grada.jpg` | El público en la grada, reaccionando. Muy expresiva. |
+| `extra-celebracion.jpg` | Celebración y abrazos en la grada. |
+
+Dime dónde las quieres y las coloco.
+
+### Sigue faltando
+
+Una foto de **alumnado de un instituto público debatiendo en clase**, con más
+gente que la de `aula.jpg`. Es la que mejor demostraría el programa a un
+equipo directivo que entre en la web por primera vez.
+
+### Si quieres cambiar alguna
+
+Sustituye el archivo en `assets/img/` conservando el nombre y la proporción.
+Antes, pásala por [Squoosh](https://squoosh.app) a JPEG calidad 70-80 para
+dejarla por debajo de 150 KB.
 
 ## Retratos de la junta
 

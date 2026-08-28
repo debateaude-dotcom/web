@@ -199,7 +199,10 @@ a { color: inherit; }
   display: inline-flex; align-items: center; gap: .65rem;
   padding: .3rem .6rem .3rem 0; text-decoration: none;
 }
-.marca__iso { width: 40px; height: 40px; flex: none; border-radius: 10px; }
+/* Monograma oficial suelto; el lockup del manual es vertical y a la
+   altura de una cabecera web dejaría el wordmark ilegible, así que
+   el nombre va compuesto al lado. */
+.marca__iso { width: auto; height: 42px; flex: none; }
 .marca__texto {
   font-size: clamp(.92rem, .86rem + .3vw, 1.05rem);
   font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
@@ -245,7 +248,7 @@ a { color: inherit; }
    aprieta un poco el nombre de la marca. */
 @media (max-width: 400px) {
   .marca { gap: .5rem; }
-  .marca__iso { width: 34px; height: 34px; }
+  .marca__iso { height: 34px; }
   .marca__texto { font-size: .8rem; letter-spacing: .09em; }
   .nav__boton { padding: .5rem .7rem; }
   .nav__boton__txt {
@@ -416,7 +419,7 @@ a { color: inherit; }
 .pie__rejilla { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .pie__rejilla { grid-template-columns: 1.5fr 1fr 1fr; } }
 /* En el pie sí cabe el lockup completo del manual a tamaño legible. */
-.pie .marca--pie svg { width: auto; height: 140px; }
+.pie .marca--pie img { width: auto; height: 130px; }
 .pie__lema { margin-top: 1.3rem; font-size: var(--p-sm); color: var(--sobre-oscuro-tenue); max-width: 40ch; }
 .pie h2 {
   font-family: var(--texto); font-size: var(--p-xs); font-weight: 700;
@@ -526,3 +529,202 @@ a { color: inherit; }
   margin: clamp(2rem, 3.5vw, 2.8rem) 0 1rem;
 }
 .apartado:first-of-type { margin-top: 0; }
+
+/* ==========================================================================
+   Cronómetro de debate (crono.html)
+   Los tres estados del reloj se controlan con data-estado en el tablero:
+   normal, aviso (últimos segundos) y pasado (tiempo agotado).
+   ========================================================================== */
+.crono { padding-block: clamp(1.75rem, 1.2rem + 2vw, 3rem) var(--aire); }
+.crono-intro { max-width: 56ch; margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
+.crono-intro h1 { font-size: var(--h2); margin-bottom: .9rem; }
+
+/* ---------- Tablero ---------- */
+.tablero {
+  background: var(--marca-oscuro);
+  color: var(--marca-fondo);
+  border-radius: calc(var(--radio) * 2);
+  padding: clamp(1.25rem, 2.5vw, 2.25rem);
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  --tono: var(--marca-apoyo);        /* color del reloj según el estado */
+}
+.tablero[data-estado="aviso"]  { --tono: #FF9F1C; }
+.tablero[data-estado="pasado"] { --tono: #FF5A57; }
+
+.tablero__equipos { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 700px) { .tablero__equipos { grid-template-columns: 1fr 1fr; } }
+
+.equipo {
+  border: 2px solid color-mix(in srgb, #fff 22%, transparent);
+  border-radius: var(--radio);
+  padding: 1rem 1.1rem 1.1rem;
+  display: grid;
+  gap: .7rem;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.equipo__papel {
+  font-size: var(--p-xs); font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--marca-fondo) 72%, transparent);
+}
+.equipo--favor .equipo__papel { color: #8CE0B4; }
+.equipo--contra .equipo__papel { color: #FFB4C4; }
+
+.equipo__nombre {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px dashed color-mix(in srgb, #fff 30%, transparent);
+  color: var(--marca-fondo);
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 1rem + 1.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  padding: .1rem 0 .3rem;
+  border-radius: 0;
+}
+.equipo__nombre::placeholder { color: color-mix(in srgb, var(--marca-fondo) 45%, transparent); }
+.equipo__nombre:focus { outline: 3px solid var(--marca-apoyo); outline-offset: 4px; border-bottom-color: var(--marca-apoyo); }
+
+.equipo__turno {
+  justify-self: start;
+  min-height: 44px;
+  padding: .5rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, #fff 35%, transparent);
+  background: transparent;
+  color: inherit;
+  font-size: var(--p-sm); font-weight: 700;
+  cursor: pointer;
+}
+.equipo__turno:hover { border-color: var(--marca-apoyo); }
+
+/* El lado que está hablando se marca de forma inequívoca: no basta el color,
+   así que además cambia el texto del botón y el borde de la tarjeta. */
+.tablero[data-lado="favor"]  .equipo--favor,
+.tablero[data-lado="contra"] .equipo--contra {
+  border-color: var(--marca-apoyo);
+  background: color-mix(in srgb, #fff 10%, transparent);
+}
+.tablero[data-lado="favor"]  .equipo--favor  .equipo__turno,
+.tablero[data-lado="contra"] .equipo--contra .equipo__turno {
+  background: var(--marca-apoyo);
+  border-color: var(--marca-apoyo);
+  color: var(--marca-oscuro);
+}
+.equipo__turno[aria-pressed="true"]::before { content: "▶ "; }
+.equipo__turno[aria-pressed="true"] { pointer-events: none; }
+
+/* ---------- Reloj ---------- */
+.tablero__reloj { text-align: center; }
+.tablero__turno {
+  font-size: var(--p-sm); font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--marca-fondo) 75%, transparent);
+  margin-bottom: .3rem;
+}
+.tablero__cifra {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(4.5rem, 2rem + 20vw, 15rem);
+  line-height: .92;
+  letter-spacing: -.04em;
+  color: var(--tono);
+  font-variant-numeric: tabular-nums;
+  transition: color .2s ease;
+}
+/* Al pasarse del tiempo el reloj late, para que se vea desde el fondo del aula. */
+.tablero[data-estado="pasado"][data-marcha="si"] .tablero__cifra {
+  animation: latido 1s ease-in-out infinite;
+}
+/* El latido no baja de 0,62: por debajo, el rojo sobre morado deja de
+   leerse bien desde el fondo del aula, que es justo cuando más importa. */
+@keyframes latido { 50% { opacity: .62; } }
+@media (prefers-reduced-motion: reduce) {
+  .tablero[data-estado="pasado"][data-marcha="si"] .tablero__cifra { animation: none; }
+}
+
+/* ---------- Mandos ---------- */
+.tablero__mandos { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+.crono-boton {
+  min-height: 52px;
+  padding: .8rem 1.8rem;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, #fff 40%, transparent);
+  background: transparent;
+  color: inherit;
+  font-size: var(--p-sm); font-weight: 700;
+  cursor: pointer;
+}
+.crono-boton:hover { background: color-mix(in srgb, #fff 14%, transparent); }
+.crono-boton--principal {
+  background: var(--marca-apoyo);
+  border-color: var(--marca-apoyo);
+  color: var(--marca-oscuro);
+  min-width: 11rem;
+}
+.crono-boton--principal:hover { background: #fff; border-color: #fff; }
+.crono-boton--principal::before { content: "▶"; margin-right: .5rem; }
+.crono-boton--principal[data-accion="pausa"]::before { content: "❚❚"; font-size: .8em; }
+
+/* ---------- Bloques de configuración ---------- */
+.crono-bloque { margin-top: clamp(2rem, 4vw, 3rem); }
+.crono-bloque__titulo {
+  font-family: var(--texto);
+  font-size: var(--p-xs); font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--marca-accion);
+  margin-bottom: 1rem;
+}
+.crono-nota { font-size: var(--p-sm); color: var(--tenue); margin-top: 1rem; max-width: 62ch; }
+
+.turnos { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+@media (min-width: 720px) { .turnos { grid-template-columns: repeat(4, 1fr); } }
+.turno {
+  min-height: 52px;
+  padding: .7rem 1rem;
+  border: 2px solid var(--lila-borde);
+  border-radius: var(--radio);
+  background: #fff;
+  color: var(--marca-texto);
+  font-size: var(--p-sm); font-weight: 700;
+  cursor: pointer;
+}
+.turno:hover { border-color: var(--marca-accion); }
+.turno[aria-pressed="true"] {
+  background: var(--marca-accion);
+  border-color: var(--marca-accion);
+  color: #fff;
+}
+
+.tiempos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media (min-width: 720px) { .tiempos { grid-template-columns: repeat(4, 1fr); } }
+.tiempos input { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+.atajos { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; font-size: var(--p-sm); color: var(--tenue); }
+kbd {
+  font-family: var(--texto);
+  font-size: .85em; font-weight: 700;
+  background: var(--lila-suave);
+  border: 1px solid var(--lila-borde);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: .15em .5em;
+  color: var(--marca-texto);
+}
+
+/* ---------- Pantalla completa: sólo el tablero ---------- */
+.en-pantalla-completa .cabecera,
+.en-pantalla-completa .pie,
+.en-pantalla-completa .crono-intro,
+.en-pantalla-completa .crono-bloque { display: none; }
+.en-pantalla-completa .crono { padding: 0; }
+.en-pantalla-completa .contenedor { max-width: none; padding: 0; }
+.en-pantalla-completa .tablero {
+  border-radius: 0;
+  min-height: 100vh;
+  align-content: center;
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+.en-pantalla-completa .tablero__cifra { font-size: min(46vh, 34vw); }
