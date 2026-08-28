@@ -157,13 +157,9 @@
         return;
       }
 
-      /* 2. Trampa de tiempo: un humano no rellena esto en 3 segundos. */
-      if ((Date.now() - nacido) / 1000 < minSegundos) {
-        anunciar(form, 'Espera un momento antes de enviar el formulario.', 'error');
-        return;
-      }
-
-      /* 3. Validación de todos los campos. */
+      /* 2. Validación de todos los campos. Va ANTES que la trampa de
+         tiempo: si alguien pulsa enviar enseguida, lo útil es decirle qué
+         campo le falta, no pedirle que espere. */
       var campos = camposDe(form);
       var invalidos = campos.filter(function (c) { return !validarCampo(c); });
 
@@ -172,6 +168,14 @@
           ? 'Hay 1 campo que revisar antes de enviar.'
           : 'Hay ' + invalidos.length + ' campos que revisar antes de enviar.', 'error');
         invalidos[0].focus();
+        return;
+      }
+
+      /* 3. Trampa de tiempo: rellenar un formulario entero correctamente en
+         menos de tres segundos es cosa de máquinas. Se comprueba sólo
+         cuando todo lo demás es válido, para no estorbar a nadie. */
+      if ((Date.now() - nacido) / 1000 < minSegundos) {
+        anunciar(form, 'Espera un momento antes de enviar el formulario.', 'error');
         return;
       }
 

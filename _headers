@@ -5,11 +5,15 @@
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
   Content-Security-Policy: default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'self'; frame-ancestors 'self'
 
+# Los nombres de archivo no llevan hash, así que "immutable" o un año de
+# caché dejaría a los visitantes recurrentes con la versión antigua tras
+# cualquier cambio. Plazos cortos y honestos:
+
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=604800
 
 /js/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=3600
 
 /styles.css
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=3600
