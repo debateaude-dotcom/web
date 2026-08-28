@@ -25,14 +25,21 @@ foto recién salida del móvil pesa 4-6 MB y hundiría la velocidad del sitio.
 
 ## Fotos de escena
 
-| Archivo | Medidas | Dónde sale | Qué tiene que verse |
+Estas cinco ya las tenéis. La columna «Tu archivo» es la foto que me indicaste;
+solo hay que **renombrarla** al nombre de la primera columna y subirla.
+
+| Archivo del sitio | Tu archivo | Medidas | Dónde sale |
 |---|---|---|---|
-| `portada.jpg` | 1600 × 900 | Portada, a todo el ancho, justo bajo el titular | **La más importante.** Foto de grupo amplia y horizontal. La del torneo en el campo del Leganés encaja perfectamente. |
-| `programa.jpg` | 1200 × 900 | Portada, sección final | **La que más falta hace y no tenéis.** Alumnado de un instituto público durante una sesión, dentro del aula. Es la prueba de lo que hacéis. |
-| `equipo.jpg` | 1600 × 900 | Quiénes somos, a todo el ancho | El equipo de AUDE junto. La foto de los doce con el cartel de "Equipo campeón" vale. |
-| `torneo.jpg` | 1500 × 1000 | Quiénes somos, junto a los logros | Entrega de premios, con el cartel del torneo visible. |
-| `formadores.jpg` | 1200 × 900 | Qué hacemos, a todo el ancho | Alguien del equipo de pie delante del alumnado, explicando. Vale una foto de una masterclass. |
-| `inclusion.jpg` | 1200 × 900 | *(sin usar todavía)* | Actividad con Down Madrid, Down Navarra, Down Almería o A Toda Vela. Cuando la tengas, dímelo y le hago sitio en Qué hacemos. |
+| `portada.jpg` | `JTG_3035` | 1600 × 900 | Portada, a todo el ancho. Grupo en el césped de Butarque. |
+| `torneo.jpg` | `JTG_1520` | 1500 × 1000 | Quiénes somos, junto a los logros. La global en CUNEF. |
+| `equipo.jpg` | `JTG_3049` | 1600 × 900 | Quiénes somos, a todo el ancho. El equipo junto al roll-up. |
+| `inclusion.jpg` | `WhatsApp Image 2024-02-19 at 20.51.16` | 1200 × 900 | Qué hacemos, tras las tres tarjetas. Colaboración con Down Madrid. |
+| `formadores.jpg` | `WhatsApp Image 2023-06-03 at 12.33.48 (1).jpeg` | 1200 × 900 | Qué hacemos, a todo el ancho. Formador en clase. |
+| `programa.jpg` | **falta** | 1200 × 900 | Portada, sección final. Alumnado de un instituto público en plena sesión, dentro del aula. Es la única que sigue pendiente, y es la que mejor demuestra lo que hacéis. |
+
+Las medidas son orientativas: lo que importa es **la proporción**. Si la foto
+es más grande, mejor; el navegador la ajusta. Si es bastante más apaisada o
+más cuadrada que lo indicado, se recortará por el centro.
 
 ## Retratos de la junta
 
@@ -55,18 +62,12 @@ sobre un fondo de marca, que queda digno.
 No hace falta que sean fotos de estudio: sirven recortes de fotos de torneos,
 siempre que la cara se vea con claridad y todas tengan un aire parecido.
 
-## Dos cosas que hay que mirar antes de publicar
+## Permisos
 
-**Menores de edad.** Varias fotos son de alumnado de instituto. Antes de
-publicarlas necesitáis la autorización de imagen firmada por las familias, o
-usar encuadres donde no se reconozca a nadie (planos de espaldas, generales
-muy abiertos, primeros planos de manos o del atril). Es el motivo más común
-por el que a una asociación le llega una reclamación.
-
-**Marcas de agua y autoría.** Algunas fotos llevan la marca de HOLE STUDIO.
-Si las hizo un fotógrafo contratado, confirma que podéis usarlas en la web y
-si hay que acreditarle. Si hay que hacerlo, dímelo y añado el crédito en el
-pie de foto.
+Confirmado por la asociación: hay autorización de imagen para el alumnado que
+aparece en las fotos, y las de HOLE STUDIO son de un encargo propio, así que se
+pueden usar. Si en algún momento el estudio pide crédito, dímelo y añado la
+línea en el pie de foto.
 
 ## Textos alternativos
 

@@ -277,8 +277,21 @@ a { color: inherit; }
 
 /* ---------- Portada ---------- */
 .portada { padding-block: clamp(2.75rem, 1.5rem + 5vw, 5.5rem) clamp(2rem, 1.5rem + 2vw, 3rem); }
-.portada h1 { font-size: var(--h1); max-width: 17ch; }
-.portada h1 em { font-style: normal; color: var(--marca-accion); }
+.portada h1 { font-size: var(--h1); max-width: 15ch; line-height: 1.02; }
+.portada h1 .morado { color: var(--marca-accion); }
+.portada h1 .contorno {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--marca-texto);
+  paint-order: stroke fill;
+}
+/* Sin soporte de text-stroke, o con contraste forzado, el texto sería
+   invisible: se rellena de nuevo. */
+@supports not (-webkit-text-stroke: 1px red) {
+  .portada h1 .contorno { color: var(--marca-texto); }
+}
+@media (forced-colors: active) {
+  .portada h1 .contorno { color: CanvasText; -webkit-text-stroke: 0; }
+}
 .portada p { font-size: var(--p-lg); max-width: 46ch; margin-top: 1.5rem; color: var(--tenue); }
 
 /* ---------- Fotografía ---------- */
@@ -507,3 +520,9 @@ a { color: inherit; }
   padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) clamp(1.75rem, 1.2rem + 2vw, 3rem);
 }
 .cabecera-pagina h1 { font-size: var(--h2); max-width: 18ch; margin-bottom: 1.1rem; }
+
+.apartado {
+  font-size: var(--h3);
+  margin: clamp(2rem, 3.5vw, 2.8rem) 0 1rem;
+}
+.apartado:first-of-type { margin-top: 0; }
