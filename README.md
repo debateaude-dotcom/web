@@ -8,10 +8,9 @@ La carpeta se sube tal cual.
 
 ```
 index.html            Portada
-quienes-somos.html    Historia, misión, junta directiva y logros
-que-hacemos.html      El programa en cuatro fases
-unete.html            Vías de participación + formulario de inscripción
-contacto.html         Datos de contacto + formulario de contacto
+quienes-somos.html    Historia, junta directiva y logros
+que-hacemos.html      El programa paso a paso
+contacto.html         Único punto de contacto: vías directas + formulario
 gracias.html          Confirmación para quien navega sin JavaScript
 404.html              Página de error (Cloudflare Pages la usa sola)
 
@@ -20,16 +19,20 @@ js/main.js            Menú móvil y año del pie
 js/forms.js           Validación y envío de los formularios
 
 assets/
-  logo-aude.svg       Lockup completo, colores fijos (para <img> y redes)
-  logo-inline.svg     Lockup que hereda el color del texto (para incrustar)
-  isotipo-aude.svg    Sólo el monograma DA, colores fijos
-  isotipo-inline.svg  Monograma que hereda el color (se usa en la cabecera)
-  favicon.svg         Monograma negro sobre el amarillo de marca
-  zigzag.svg          Motivo gráfico del manual de identidad
+  logo-aude.svg       Lockup completo sobre fondo claro
+  logo-negativo.svg   Lockup para fondo morado (se usa en el pie)
+  logo-inline.svg     Lockup cuyo wordmark hereda el color del texto
+  isotipo-aude.svg    Sólo el monograma DA
+  isotipo-inline.svg  Monograma que hereda el color
+  isotipo-tile.svg    Monograma en cuadrado morado (marca de la cabecera)
+  favicon.svg         El mismo cuadrado, como icono de pestaña
+  zigzag.svg          Motivo gráfico del manual
   og-debate-aude.png  Imagen para redes sociales, 1200×630
+  img/                Fotografías del sitio (ver FOTOS.md)
 
 robots.txt  sitemap.xml  _headers
-FORMSPREE.md          Alta en Formspree y dónde pegar cada endpoint
+FORMSPREE.md          Alta en Formspree y dónde pegar el endpoint
+FOTOS.md              Qué foto va en cada hueco y con qué medidas
 ```
 
 ## Desplegar en Cloudflare Pages
@@ -57,14 +60,13 @@ para que sea imposible desplegarlas por descuido:
 
 | Qué                | Dónde                                   | Estado |
 |--------------------|------------------------------------------|--------|
-| Endpoints Formspree| `unete.html` y `contacto.html`, `XXXXXXXX` en el `action` | pendiente — ver `FORMSPREE.md` |
-| Correo de contacto | `hola@debateaude.com` en todas las páginas | confirmar que existe |
-| Perfiles sociales  | Instagram en el pie y en el JSON-LD      | confirmar la URL |
+| Endpoint Formspree | `contacto.html`, `XXXXXXXX` en el `action` | pendiente — ver `FORMSPREE.md` |
+| Fotografías reales | `assets/img/` | pendiente — ver `FOTOS.md` |
 
 Para encontrarlos:
 
 ```sh
-grep -rn "XXXXXXXX\|hola@debateaude.com" *.html
+grep -rn "XXXXXXXX" *.html
 ```
 
 ## Cambiar la paleta
@@ -74,18 +76,20 @@ marca. El resto de la hoja deriva de ellas:
 
 ```css
 :root {
-  --marca-fondo:   #000000;  /* fondo dominante */
-  --marca-texto:   #FEF6F6;  /* texto sobre el fondo */
-  --marca-accion:  #FFDE57;  /* botones y acentos */
-  --marca-apoyo:   #C09DFA;  /* segundo acento */
-  --marca-acento:  #8751F4;  /* marcas del logo, detalles */
+  --marca-fondo:  #FEF6F6;  /* fondo de la página */
+  --marca-texto:  #1C1226;  /* texto principal */
+  --marca-accion: #6C2BE0;  /* morado de interfaz: botones, enlaces, acentos */
+  --marca-apoyo:  #FFDE57;  /* amarillo de marca: subrayados y bandas */
+  --marca-oscuro: #2E1065;  /* morado profundo de las bandas destacadas */
 }
 ```
 
-Justo debajo hay dos derivados, `--acento-oscuro` y `--acento-claro`, que
-existen porque el morado de marca no llega a 4,5:1 sobre negro ni sobre
-los fondos claros. Si cambias `--marca-acento`, recalcula también
-`--acento-claro`.
+El morado de interfaz es el morado de marca (`#8751F4`) oscurecido: el
+original da 4,37:1 sobre el fondo claro y no llega al mínimo de
+accesibilidad. En el logo se conserva el de marca.
+
+El amarillo da 1,25:1 sobre fondo claro, así que **nunca se usa como texto**:
+sólo como fondo de banda o como subrayado.
 
 ## Trabajar en local
 
@@ -105,5 +109,7 @@ orden de encabezados, foco visible, objetivos táctiles de 44 px, formularios
 con etiquetas y errores asociados por `aria-describedby`, y navegación
 completa por teclado. Los formularios y el menú funcionan sin JavaScript.
 
-Si tocas los colores, comprueba el contraste antes de publicar: la paleta
-de marca es muy luminosa y sólo funciona sobre fondo oscuro.
+Si tocas los colores, comprueba el contraste antes de publicar. En especial
+el amarillo y el morado claro del manual: sobre fondo claro no llegan ni de
+lejos al mínimo, y por eso aquí sólo aparecen como fondo de banda o dentro
+del logo, nunca como texto.
