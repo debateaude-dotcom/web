@@ -1,132 +1,175 @@
 # Pasar el dominio de Wix a Cloudflare
 
-El dominio `debateaude.com` sigue **registrado en Wix**. Lo único que cambia
-es quién gestiona el DNS, es decir, quién decide a qué servidor apunta el
-dominio. Eso se hace cambiando los *servidores de nombres* (nameservers).
+`debateaude.com` está **registrado en Wix** y ahí se queda. Lo único que
+cambia es quién gestiona el DNS, es decir, quién decide a qué servidor
+apunta el dominio. Eso se hace cambiando los *servidores de nombres*
+(nameservers).
 
-No hace falta transferir el dominio ni esperar ningún plazo.
+No hay que transferir el dominio ni esperar ningún plazo.
 
 ---
 
 ## Qué implica en dinero
 
-Hay que separar dos cosas que en Wix se pagan por separado:
+En Wix el dominio y el plan de la web se pagan por separado, y en el caso
+de AUDE **el dominio está comprado aparte: no depende del plan Premium**.
 
 | Qué | Qué pasa | Coste |
 |---|---|---|
-| **El registro del dominio** | Se queda en Wix. Hay que seguir renovándolo ahí. | Lo que ya pagáis, ~15-20 €/año |
-| **El plan Premium de Wix** (la web en sí) | Se puede cancelar cuando la nueva esté funcionando | Deja de pagarse |
+| Registro del dominio | Se queda en Wix, con su propia renovación | Lo que ya se paga |
+| Plan Premium de Wix | Se cancela cuando la web nueva funcione | Deja de pagarse |
 
-Es decir: **seguís pagando el dominio a Wix, pero dejáis de pagar el
-alojamiento**. Cloudflare Pages es gratuito para un sitio como este.
+Cloudflare Pages es gratuito para un sitio como este. Así que al terminar
+sólo se paga la renovación anual del dominio.
 
-### Ojo con el dominio "gratis del primer año"
-
-Si el dominio os vino **incluido con el plan Premium**, al cancelar el plan
-Wix puede dejar de renovarlo. Compruébalo antes en Wix, en la sección de
-facturación: mira si el dominio aparece como una suscripción propia con su
-propia fecha de renovación. Si no la tiene, contacta con soporte de Wix y
-pregunta expresamente qué pasa con el dominio si cancelas el plan.
-
-### Si más adelante queréis dejar Wix del todo
-
-Podéis transferir el registro a Cloudflare, que lo cobra a precio de coste
-(unos 10 €/año, sin margen). Requisitos: que hayan pasado más de 60 días
-desde que lo comprasteis o desde la última transferencia. No corre prisa:
-podéis hacer el cambio de servidores de nombres ahora y transferir cuando
-os venga bien.
+Si algún día queréis dejar Wix del todo, se puede transferir el registro a
+Cloudflare, que lo cobra a precio de coste (unos 10 €/año). Hace falta que
+hayan pasado más de 60 días desde la compra o desde la última transferencia.
+No corre prisa: esto se puede hacer mucho después.
 
 ---
 
-## Antes de tocar nada
+## Situación de partida
 
-**1. Apunta lo que hay ahora.** En Wix, entra en la configuración DNS del
-dominio y haz una captura de pantalla de **todos** los registros. La vas a
-necesitar si algo sale mal, y para no perder nada por el camino.
+Estos son los registros que había en Wix antes de empezar. Se apuntan aquí
+por si hubiera que volver atrás:
 
-**2. Mira si tenéis correo en el dominio.** Si existe algún buzón del tipo
-`algo@debateaude.com`, en esa lista habrá registros **MX**. Esos hay que
-copiarlos a Cloudflare o el correo dejará de llegar. Si usáis Gmail normal
-(`debateaude@gmail.com`), no hay nada que hacer: ese correo no depende del
-dominio.
+| Tipo | Nombre | Valor |
+|---|---|---|
+| A | debateaude.com | 185.230.63.171 |
+| A | debateaude.com | 185.230.63.186 |
+| A | debateaude.com | 185.230.63.107 |
+| CNAME | www.debateaude.com | cdn1.wixdns.net |
+| NS | debateaude.com | ns4.wixdns.net |
+| NS | debateaude.com | ns5.wixdns.net |
 
-**3. No canceles el plan de Wix todavía.** Primero que funcione lo nuevo.
+**No hay registros MX ni TXT.** Es decir, no hay ningún correo del tipo
+`algo@debateaude.com`: la asociación usa `debateaude@gmail.com`, que no
+depende del dominio. Eso simplifica mucho las cosas, porque no hay nada de
+correo que preservar.
+
+Las tres direcciones IP y el CNAME son de Wix. Cuando Cloudflare tome el
+control del DNS habrá que quitarlos, o el dominio seguiría apuntando a la
+web vieja.
 
 ---
 
-## Los pasos
+## Paso 1 · Añadir el dominio en Cloudflare  ✅ hecho
 
-### 1. Crear la cuenta de Cloudflare
+Cuenta gratuita, **Add a site**, `debateaude.com`, plan **Free**.
 
-Entra en <https://dash.cloudflare.com/sign-up> y regístrate con el correo de
-la asociación. Es gratis.
+Al terminar, Cloudflare enseña este mensaje y se queda esperando:
 
-### 2. Añadir el dominio
+> *Waiting for your registrar to propagate your new nameservers.*
 
-En el panel, **Add a site** → escribe `debateaude.com` → elige el plan
-**Free** → continuar.
+**Ese mensaje no significa que esté en marcha: significa que Cloudflare
+está esperando a que hagas el paso 2.** Puede esperar indefinidamente. Hasta
+que no se cambien los servidores de nombres en Wix, no pasa nada.
 
-Cloudflare rastrea los registros que hay ahora y te los muestra. **Revísalos
-uno por uno** contra la captura que hiciste en Wix: si falta alguno, añádelo
-a mano. Presta atención sobre todo a los MX (correo) y a los TXT (suelen ser
-verificaciones de servicios).
+---
 
-### 3. Copiar los dos servidores de nombres
+## Paso 2 · Copiar los servidores de nombres de Cloudflare
 
-Al terminar, Cloudflare te enseña dos direcciones parecidas a estas:
+En el panel de Cloudflare, entra en `debateaude.com` → pestaña **DNS** →
+**Records**. Arriba, o en la pantalla de resumen (**Overview**), aparecen
+dos direcciones con esta pinta:
 
 ```
 adam.ns.cloudflare.com
 lola.ns.cloudflare.com
 ```
 
-Los nombres cambian en cada cuenta. Cópialos tal cual.
+Los nombres propios cambian en cada cuenta. Cópialos tal cual.
 
-### 4. Ponerlos en Wix
+---
 
-En Wix, ve a la gestión de dominios, entra en `debateaude.com` y busca la
-opción de servidores de nombres. Suele estar en un apartado de configuración
-avanzada, con un nombre parecido a **"Cambiar servidores de nombres"** o
-**"Conectar a un sitio externo"**. Elige la opción de **usar servidores de
-nombres externos** y pega los dos de Cloudflare, sustituyendo a los de Wix.
+## Paso 3 · Ponerlos en Wix
 
-Guarda.
+**Aviso importante:** esto **no** se hace en la pantalla de *Administra los
+registros DNS*. Ahí los registros NS aparecen con la nota «Los registros NS
+no son editables», y es normal: desde ahí no se tocan.
 
-> Los menús de Wix cambian de sitio cada cierto tiempo, así que puede que los
-> textos no sean exactamente estos. Lo que buscas siempre es lo mismo: dejar
-> de usar los servidores de nombres de Wix y poner los de Cloudflare.
+La opción está un nivel más arriba:
 
-### 5. Esperar
+1. En Wix, ve a **Ajustes → Dominios**.
+2. Pulsa sobre `debateaude.com` (sobre el nombre, no sobre «Registros DNS»).
+3. Busca la opción de **conectar el dominio a un sitio externo** o de
+   **cambiar los servidores de nombres**. Suele estar en un apartado
+   *Avanzado* o detrás del menú de tres puntos del dominio.
+4. Si te ofrece elegir entre dos métodos, elige el de **servidores de
+   nombres** (*nameservers*), no el de «apuntar» con registros A.
+5. Sustituye `ns4.wixdns.net` y `ns5.wixdns.net` por los dos de Cloudflare.
+6. Guarda.
 
-Cloudflare te manda un correo cuando el dominio está activo. Suele tardar
-menos de una hora, aunque oficialmente puede llegar a 48. Mientras tanto la
-web de Wix sigue funcionando.
+> Los menús de Wix se mueven de sitio cada pocos meses. Lo que buscas
+> siempre es lo mismo: dejar de usar los servidores de nombres de Wix y
+> poner los de Cloudflare. Si no aparece por ningún lado, escribe al soporte
+> de Wix pidiendo exactamente eso: *"quiero cambiar los servidores de nombres
+> de mi dominio a unos externos"*.
 
-### 6. Conectar el dominio a la web nueva
+Cloudflare manda un correo cuando detecta el cambio. Suele tardar menos de
+una hora, aunque oficialmente puede llegar a 24. **Mientras tanto la web de
+Wix sigue funcionando con normalidad**, así que no hay prisa ni riesgo.
 
-Cuando Cloudflare confirme, entra en tu proyecto de **Workers & Pages** →
-pestaña **Custom domains** → **Set up a custom domain** → escribe
-`debateaude.com`. Repite con `www.debateaude.com`.
+---
 
-Como el DNS ya lo lleva Cloudflare, los registros se crean solos y el
-certificado de seguridad (el candado del navegador) también. En unos minutos
-`debateaude.com` muestra la web nueva.
+## Paso 4 · Limpiar los registros heredados
 
-### 7. Ahora sí, cancelar el plan de Wix
+Cuando Cloudflare confirme que el dominio está activo:
 
-Comprueba primero, con calma:
+1. Entra en `debateaude.com` → **DNS** → **Records**.
+2. Verás que Cloudflare copió los registros que tenía Wix. **Borra**:
+   - los tres registros **A** de `debateaude.com` (las IP `185.230.63.x`),
+   - el **CNAME** de `www` que apunta a `cdn1.wixdns.net`.
 
-- La web nueva se ve en `debateaude.com` y en `www.debateaude.com`.
-- Sale el candado de seguridad en la barra del navegador.
-- El formulario de contacto envía y el correo llega.
-- Si teníais correo en el dominio, que sigue funcionando.
+Son los que llevan a la web vieja. Si se quedan, el dominio seguiría
+mostrando Wix.
 
-Con eso comprobado, cancela **el plan Premium** de Wix, no el dominio.
+Durante un ratito el dominio no llevará a ninguna parte. Dura lo que tardes
+en hacer el paso 5, que es un minuto.
+
+---
+
+## Paso 5 · Conectar el dominio a la web nueva
+
+En Cloudflare, **Workers & Pages** → tu proyecto → pestaña
+**Custom domains** → **Set up a custom domain**:
+
+1. Escribe `debateaude.com` y confirma.
+2. Repite con `www.debateaude.com`.
+
+Como el DNS ya lo lleva Cloudflare, los registros correctos y el certificado
+de seguridad se crean solos. En pocos minutos `debateaude.com` muestra la
+web nueva con su candado.
+
+---
+
+## Paso 6 · Comprobar, y sólo entonces cancelar Wix
+
+Antes de cancelar nada, con calma:
+
+- [ ] `debateaude.com` muestra la web nueva.
+- [ ] `www.debateaude.com` también.
+- [ ] Sale el candado de seguridad en la barra del navegador.
+- [ ] El formulario de contacto envía y el correo llega a
+      `debateaude@gmail.com`.
+- [ ] Se ve bien desde el móvil, con datos y no por wifi de casa.
+
+Con todo eso marcado, cancela **el plan Premium** de Wix. **No canceles ni
+dejes expirar el dominio**, que es lo que sigue haciendo que `debateaude.com`
+exista.
 
 ---
 
 ## Si algo sale mal
 
-Vuelve a poner en Wix sus servidores de nombres originales (los de la
-captura del paso 1). En una hora todo vuelve a estar como estaba. No se
-pierde nada: la web de Wix sigue existiendo mientras el plan esté activo.
+Vuelve a poner en Wix sus servidores de nombres originales:
+
+```
+ns4.wixdns.net
+ns5.wixdns.net
+```
+
+En una hora todo está como estaba. No se pierde nada: la web de Wix sigue
+existiendo mientras el plan siga activo, y por eso conviene no cancelarlo
+hasta haber comprobado que lo nuevo funciona.

@@ -23,9 +23,18 @@ cómo.
 
 ## Antes de empezar: entrar
 
-1. Crea una cuenta en <https://github.com> si no la tienes.
-2. Pídele a quien administre el repositorio que te dé acceso.
-3. Entra en el repositorio `debateaude-dotcom/web`.
+La web vive en la cuenta de GitHub de la asociación, que está **enlazada al
+Google de Debate Aude** (`debateaude@gmail.com`).
+
+1. Entra en <https://github.com/login>.
+2. Pulsa **Continue with Google** e inicia sesión con la cuenta de Google de
+   la asociación. No hay que recordar ninguna contraseña aparte.
+3. Ve al repositorio `debateaude-dotcom/web`.
+
+Si prefieres entrar con tu propia cuenta de GitHub en vez de con la de la
+asociación, pídele a quien la administre que te añada como colaborador:
+repositorio → **Settings** → **Collaborators** → **Add people**. Es más
+ordenado, porque así en el historial queda quién hizo cada cambio.
 
 ---
 
@@ -117,6 +126,99 @@ convence entra en la pestaña **Pull requests** de GitHub y pulsa
 
 ---
 
+## Editar con inteligencia artificial
+
+Se puede pedirle a una IA que haga los cambios. Hay dos formas, y conviene
+saber en qué se diferencian.
+
+### Opción A · Que la IA edite la web directamente
+
+Es lo que se ha usado para construir este sitio. La IA entra en el
+repositorio, hace los cambios y los guarda ella misma.
+
+1. Entra en <https://claude.ai/code> con una cuenta de Claude de pago.
+2. Conecta GitHub la primera vez (te lo pide solo) y elige el repositorio
+   `debateaude-dotcom/web`.
+3. Escribe lo que quieres en español, sin tecnicismos.
+4. Cuando termine, revisa lo que ha hecho y publícalo.
+
+ChatGPT tiene algo equivalente en sus planes de pago, llamado **Codex**, que
+también se conecta a GitHub. El funcionamiento es el mismo.
+
+**Pídele siempre que trabaje en una rama aparte**, no directamente sobre la
+web publicada. Así puedes ver el resultado antes de que lo vea nadie.
+
+### Opción B · Que la IA escriba y tú pegues
+
+Si no tienes acceso a lo anterior, sirve cualquier ChatGPT o Claude normal,
+incluso el gratuito:
+
+1. En GitHub, abre el archivo, pulsa el lápiz y **copia el trozo** que
+   quieres cambiar.
+2. Pégaselo a la IA con el encargo (abajo tienes la plantilla).
+3. Copia lo que te devuelva, pégalo en su sitio y guarda.
+
+Es más lento, pero no requiere permisos ni pagar nada.
+
+### Plantilla de encargo
+
+Pégale esto delante de lo que le pidas. Le da el contexto que necesita para
+no romper nada:
+
+> Estás editando la web de Debate Aude, una asociación juvenil que lleva
+> formación gratuita en debate y oratoria a institutos públicos.
+>
+> Reglas que no puedes saltarte:
+> - Es HTML, CSS y JavaScript puros. Nada de React ni de frameworks, y no
+>   añadas librerías externas.
+> - No toques `styles.css` ni la carpeta `js/` salvo que te lo pida
+>   expresamente.
+> - Mantén las etiquetas tal cual están: cambia sólo el texto que hay entre
+>   ellas.
+> - Todas las imágenes tienen que llevar su `alt` describiendo lo que se ve.
+> - El tono es cercano y reivindicativo, sin palabrería de empresa. En
+>   español de España.
+> - Los titulares no mencionan que sea gratis; eso va en los textos.
+>
+> Lo que quiero que hagas:
+> [aquí lo tuyo]
+
+### Ejemplos de encargos que funcionan bien
+
+> Cambia el texto de la sección «Qué hacemos en tu instituto» de la portada
+> para que mencione que también trabajamos con centros de FP.
+
+> En «Quiénes somos», añade a la lista de logros que este curso hemos estado
+> en cuatro institutos nuevos de Zaragoza.
+
+> Corrige las faltas de ortografía de toda la web sin cambiar el contenido.
+
+> Cambia el correo de contacto de toda la web por otro nuevo.
+
+### Lo que conviene NO pedirle a la IA sin ayuda
+
+Puede hacerlo, pero es fácil que rompa algo sin que se note a simple vista:
+
+- Cambiar los colores o las tipografías.
+- Añadir páginas nuevas o cambiar el menú.
+- Tocar el formulario de contacto o el cronómetro.
+- Reorganizar cómo se distribuye una página.
+
+Para eso, mejor abrir una conversación explicando lo que se quiere y
+revisarlo entre dos personas.
+
+### Tres cosas que hay que hacer siempre
+
+**Léete lo que ha cambiado.** GitHub enseña en verde lo añadido y en rojo lo
+quitado. Si ha tocado más archivos de los que esperabas, párate.
+
+**Míralo antes de publicarlo.** Pídele que lo deje en una rama y usa el
+enlace de borrador (más arriba, en «Ver cómo queda antes de publicarlo»).
+
+**Comprueba los datos.** Una IA puede escribir un número de institutos o una
+fecha que suenan bien y son inventados. Todo dato nuevo tiene que salir de
+alguien de la asociación, no del modelo.
+
 ## Qué NO tocar
 
 Estos archivos hacen que la web funcione. Si hay que cambiarlos, mejor
@@ -173,5 +275,9 @@ antes que improvisar:
 >
 > **Cambiar una foto:** squoosh.app para dejarla en menos de 150 KB →
 > renómbrala igual que la vieja → `assets/img` → *Add file* → *Upload files*.
+>
+> **Con IA:** claude.ai/code → conectas el repositorio `web` → le pides el
+> cambio en español → le dices que lo deje en una rama → lo revisas → lo
+> publicas.
 >
 > **Metí la pata:** pestaña *Commits* → tu cambio → botón *Revert*.
