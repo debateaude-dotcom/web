@@ -33,9 +33,16 @@ assets/
   img/logo-negro.svg  Ídem, versión negra
 
 robots.txt  sitemap.xml  _headers
+
+EDITAR.md             Cómo cambiar textos y fotos sin saber programar
+DOMINIO.md            Pasar el dominio de Wix a Cloudflare, paso a paso
 FORMSPREE.md          Alta en Formspree y dónde pegar el endpoint
 FOTOS.md              Qué foto va en cada hueco y con qué medidas
 ```
+
+> Si no eres una persona técnica y solo quieres corregir un texto o cambiar
+> una foto, ve directamente a **[EDITAR.md](EDITAR.md)**. No necesitas nada
+> de lo que viene a continuación.
 
 ## Desplegar en Cloudflare Pages
 
@@ -47,6 +54,8 @@ FOTOS.md              Qué foto va en cada hueco y con qué medidas
    - **Build output directory**: `/`
 3. **Save and Deploy**.
 4. En **Custom domains**, añade `debateaude.com` y `www.debateaude.com`.
+   El dominio está registrado en Wix: los pasos para que apunte aquí están
+   en [DOMINIO.md](DOMINIO.md).
 
 Si prefieres no conectar Git, en **Upload assets** puedes arrastrar la
 carpeta entera: no hay nada que compilar.
