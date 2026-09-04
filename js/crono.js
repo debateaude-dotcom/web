@@ -16,11 +16,15 @@
 
   var ALMACEN = 'aude-crono-v1';
 
+  /* El orden de esta lista es el orden real del debate. La refutación
+     cruzada va después de la introducción y sólo la usan algunos torneos,
+     así que se puede apagar desde la propia página. */
   var TURNOS = [
-    { id: 'introduccion', nombre: 'Introducción', porDefecto: 240 },
-    { id: 'refutacion1',  nombre: 'Refutación 1', porDefecto: 300 },
-    { id: 'refutacion2',  nombre: 'Refutación 2', porDefecto: 300 },
-    { id: 'conclusion',   nombre: 'Conclusión',   porDefecto: 210 }
+    { id: 'introduccion', nombre: 'Introducción',        porDefecto: 240 },
+    { id: 'cruzada',      nombre: 'Refutación cruzada',  porDefecto: 180, opcional: true },
+    { id: 'refutacion1',  nombre: 'Refutación 1',        porDefecto: 300 },
+    { id: 'refutacion2',  nombre: 'Refutación 2',        porDefecto: 300 },
+    { id: 'conclusion',   nombre: 'Conclusión',          porDefecto: 210 }
   ];
 
   var AVISO = 10;   // segundos a partir de los cuales se avisa en naranja
@@ -29,6 +33,7 @@
   var estado = {
     turno: TURNOS[0].id,
     lado: 'favor',          // 'favor' | 'contra'
+    cruzada: false,         // ¿el torneo usa refutación cruzada?
     duraciones: {},
     equipos: { favor: 'Equipo a favor', contra: 'Equipo en contra' },
     arrancadoEn: null,      // marca de tiempo del último play
@@ -75,7 +80,8 @@
     try {
       localStorage.setItem(ALMACEN, JSON.stringify({
         duraciones: estado.duraciones,
-        equipos: estado.equipos
+        equipos: estado.equipos,
+        cruzada: estado.cruzada
       }));
     } catch (e) { /* modo privado o almacenamiento lleno: da igual */ }
   }
@@ -89,6 +95,7 @@
           if (typeof v === 'number' && v > 0 && v <= 5999) estado.duraciones[t.id] = v;
         });
       }
+      if (typeof d.cruzada === 'boolean') estado.cruzada = d.cruzada;
       if (d.equipos) {
         ['favor', 'contra'].forEach(function (k) {
           if (typeof d.equipos[k] === 'string' && d.equipos[k].trim()) {
@@ -108,6 +115,8 @@
   var btnPantalla= $('#crono-pantalla-completa');
   var aviso      = $('#crono-aviso');
   var tablero    = $('#crono-tablero');
+  var btnCruzada = $('#crono-cruzada');
+  var campoCruzada = $('#campo-cruzada');
   var ladoFavor  = $('#lado-favor');
   var ladoContra = $('#lado-contra');
   var nomFavor   = $('#nombre-favor');
@@ -203,6 +212,25 @@
     reiniciar();
   }
 
+  /* Enciende o apaga el turno opcional. Si estaba seleccionado al apagarlo,
+     se vuelve al primer turno para no dejar el reloj en un turno invisible. */
+  function aplicarCruzada() {
+    var botonTurno = document.querySelector('[data-turno="cruzada"]');
+    if (botonTurno) botonTurno.hidden = !estado.cruzada;
+    if (campoCruzada) campoCruzada.hidden = !estado.cruzada;
+    if (btnCruzada) btnCruzada.setAttribute('aria-pressed', estado.cruzada ? 'true' : 'false');
+    if (!estado.cruzada && estado.turno === 'cruzada') elegirTurno(TURNOS[0].id);
+  }
+
+  function alternarCruzada() {
+    estado.cruzada = !estado.cruzada;
+    aplicarCruzada();
+    guardar();
+    anunciar(estado.cruzada
+      ? 'Refutación cruzada activada. Va después de la introducción.'
+      : 'Refutación cruzada desactivada. Quedan los cuatro turnos habituales.');
+  }
+
   function elegirLado(lado) {
     estado.lado = lado;
     tablero.dataset.lado = lado;
@@ -218,6 +246,8 @@
   document.querySelectorAll('[data-turno]').forEach(function (b) {
     b.addEventListener('click', function () { elegirTurno(b.dataset.turno); });
   });
+
+  if (btnCruzada) btnCruzada.addEventListener('click', alternarCruzada);
 
   ladoFavor.addEventListener('click', function () { elegirLado('favor'); });
   ladoContra.addEventListener('click', function () { elegirLado('contra'); });
@@ -289,5 +319,8 @@
     campo.value = formatear(estado.duraciones[campo.dataset.duracion]);
   });
   elegirLado('favor');
+  aplicarCruzada();
+  /* Si lo guardado apuntaba a la cruzada pero está apagada, se corrige. */
+  if (estado.turno === 'cruzada' && !estado.cruzada) estado.turno = TURNOS[0].id;
   elegirTurno(estado.turno);
 })();

@@ -231,6 +231,10 @@ pedirlo a alguien técnico:
 | `_headers` | La seguridad del sitio |
 | `sitemap.xml`, `robots.txt` | Lo que ve Google |
 
+`llms.txt` sí se puede editar: es texto normal, y es el resumen de la
+asociación que leen ChatGPT y compañía. Si cambia el correo o algún dato de la
+web, cámbialo ahí también.
+
 Y dentro de las páginas, no toques lo que está **antes** de la línea que
 pone `<body>`: ahí van el título que sale en Google y los datos que usan
 Instagram y WhatsApp para la vista previa.

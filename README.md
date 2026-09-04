@@ -32,10 +32,10 @@ assets/
   img/logo-color.svg  Original que entregó la asociación, sin tocar
   img/logo-negro.svg  Ídem, versión negra
 
-robots.txt  sitemap.xml  _headers
+robots.txt  sitemap.xml  llms.txt  _headers
 
 EDITAR.md             Cómo cambiar textos y fotos sin saber programar
-DOMINIO.md            Pasar el dominio de Wix a Cloudflare, paso a paso
+DOMINIO.md            Cómo quedó montado el dominio y qué falta rematar
 FORMSPREE.md          Alta en Formspree y dónde pegar el endpoint
 FOTOS.md              Qué foto va en cada hueco y con qué medidas
 ```
@@ -54,8 +54,8 @@ FOTOS.md              Qué foto va en cada hueco y con qué medidas
    - **Build output directory**: `/`
 3. **Save and Deploy**.
 4. En **Custom domains**, añade `debateaude.com` y `www.debateaude.com`.
-   El dominio está registrado en Wix: los pasos para que apunte aquí están
-   en [DOMINIO.md](DOMINIO.md).
+   El dominio está registrado en GoDaddy y el DNS lo lleva Cloudflare:
+   el montaje completo está en [DOMINIO.md](DOMINIO.md).
 
 Si prefieres no conectar Git, en **Upload assets** puedes arrastrar la
 carpeta entera: no hay nada que compilar.
@@ -71,7 +71,7 @@ desplegarlo por descuido:
 
 | Qué                | Dónde                                   | Estado |
 |--------------------|------------------------------------------|--------|
-| Endpoint Formspree | `contacto.html`, `XXXXXXXX` en el `action` | pendiente — ver `FORMSPREE.md` |
+| Endpoint Formspree | `contacto.html`, `XXXXXXXX` en el `action` | **pendiente** — ver `FORMSPREE.md`. Es lo único que separa al formulario de funcionar: se sustituye una palabra. Mientras tanto el formulario no falla en silencio: valida, avisa y ofrece un enlace que abre el correo con lo escrito. |
 | Retratos de la junta | `assets/img/junta/` | pendiente, se ven las iniciales — ver `FOTOS.md` |
 
 Para encontrarlos:
@@ -136,9 +136,32 @@ El reloj no va restando de un intervalo, que se retrasa cuando la pestaña
 pierde el foco: guarda el instante de arranque y calcula la diferencia contra
 el reloj del sistema. Así no regala segundos aunque el navegador se duerma.
 
+Los turnos por defecto son cuatro: introducción, refutación 1, refutación 2 y
+conclusión. El interruptor **Refutación cruzada** añade un quinto turno entre
+la introducción y la refutación 1, para los torneos que lo usan; se comporta
+como cualquier otro turno y su estado también se guarda en el navegador. Si
+está apagado, la página es exactamente la de antes.
+
 Colores del reloj: amarillo mientras hay tiempo, naranja en los últimos diez
 segundos, y rojo con cuenta ascendente en negativo al pasarse.
 
 Atajos: **espacio** empieza o pausa, **R** reinicia, **←** y **→** pasan el
 turno de un equipo al otro. El botón de pantalla completa deja sólo el
 tablero, que es como conviene proyectarlo.
+
+## Posicionamiento
+
+Cada página lleva título, descripción, Open Graph y una etiqueta
+`<link rel="canonical">` apuntando a `debateaude.com`, para que la dirección
+técnica de Cloudflare (`web.debateaude.workers.dev`) no compita con el dominio
+bueno. `gracias.html` y `404.html` van con `noindex` y por eso no llevan
+canonical.
+
+Hay datos estructurados (JSON-LD) en todas las páginas: `NGO` en la portada,
+`BreadcrumbList` en las interiores, `ContactPage` en contacto, `FAQPage` en
+qué hacemos y `WebApplication` en el cronómetro. Si tocas uno, comprueba que
+sigue siendo JSON válido y pásalo por <https://validator.schema.org>.
+
+`llms.txt` es un resumen en texto plano de la asociación con los datos que
+más se citan mal (nombre, correo, coste, ámbito). Lo leen los buscadores con
+IA. Si cambia algún dato de la web, cámbialo también ahí.

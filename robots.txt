@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://debateaude.com/sitemap.xml
+
+# Resumen en texto plano para asistentes de IA:
+# https://debateaude.com/llms.txt

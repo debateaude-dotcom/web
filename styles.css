@@ -728,3 +728,87 @@ kbd {
   padding: clamp(1.5rem, 4vw, 4rem);
 }
 .en-pantalla-completa .tablero__cifra { font-size: min(46vh, 34vw); }
+
+/* Interruptor de turno opcional (refutación cruzada) */
+.crono-bloque__cabecera {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: .75rem 1rem; margin-bottom: 1rem;
+}
+.crono-bloque__cabecera .crono-bloque__titulo { margin-bottom: 0; }
+.interruptor {
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 44px; padding: .35rem .95rem .35rem .6rem;
+  border: 2px solid var(--lila-borde);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--tenue);
+  font-size: var(--p-xs); font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  cursor: pointer;
+}
+.interruptor:hover { border-color: var(--marca-accion); }
+.interruptor__luz {
+  width: 32px; height: 18px; border-radius: 999px;
+  background: var(--lila-borde);
+  position: relative; flex: none;
+  transition: background-color .15s ease;
+}
+.interruptor__luz::after {
+  content: ""; position: absolute; top: 3px; left: 3px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff;
+  transition: transform .15s ease;
+}
+.interruptor[aria-pressed="true"] {
+  border-color: var(--marca-accion);
+  color: var(--marca-accion);
+  background: var(--lila-suave);
+}
+.interruptor[aria-pressed="true"] .interruptor__luz { background: var(--marca-accion); }
+.interruptor[aria-pressed="true"] .interruptor__luz::after { transform: translateX(14px); }
+@media (prefers-reduced-motion: reduce) {
+  .interruptor__luz, .interruptor__luz::after { transition: none; }
+}
+
+/* Con cinco turnos la rejilla se reparte distinto */
+@media (min-width: 720px) {
+  .turnos { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+  .tiempos { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+}
+
+/* El enlace de rescate del formulario tiene que verse como enlace */
+.form__estado a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Preguntas frecuentes ---------- */
+.faq { display: grid; gap: .75rem; max-width: 62rem; }
+.faq__item {
+  border: 1px solid var(--lila-borde);
+  border-radius: var(--radio);
+  background: var(--marca-fondo);
+}
+.faq__item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.2rem;
+  font-family: var(--display);
+  font-size: var(--h3);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  cursor: pointer;
+  list-style: none;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: "+";
+  font-family: var(--texto);
+  font-size: 1.5rem; font-weight: 400; line-height: 1;
+  color: var(--marca-accion);
+  flex: none;
+}
+.faq__item[open] summary::after { content: "−"; }
+.faq__item summary:hover { color: var(--marca-accion); }
+.faq__item p {
+  padding: 0 1.2rem 1.2rem;
+  font-size: var(--p-sm);
+  color: var(--tenue);
+  max-width: 68ch;
+}

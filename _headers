@@ -17,3 +17,12 @@
 
 /styles.css
   Cache-Control: public, max-age=3600
+
+# La web sigue accesible por su dirección técnica de Cloudflare. Que exista
+# no molesta, pero si Google la indexa compite con debateaude.com por los
+# mismos textos. Las etiquetas <link rel="canonical"> ya apuntan al dominio
+# bueno; esto lo remata pidiendo a los buscadores que no indexen esa copia.
+# (Lo definitivo es una Redirect Rule en el panel de Cloudflare: ver DOMINIO.md.)
+
+https://web.debateaude.workers.dev/*
+  X-Robots-Tag: noindex

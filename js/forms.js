@@ -27,6 +27,7 @@
   'use strict';
 
   var ENDPOINT_SIN_CONFIGURAR = /XXXXXXXX/;
+  var CORREO = 'debateaude@gmail.com';
 
   /* Mensajes en español; el navegador los da en el idioma del sistema. */
   function mensajeDeError(campo) {
@@ -116,15 +117,47 @@
     return form.querySelector('.form__estado');
   }
 
-  function anunciar(form, texto, tono) {
+  function anunciar(form, texto, tono, rescate) {
     var caja = estado(form);
     if (!caja) return;
     caja.textContent = texto;
+    if (rescate) {
+      /* Se construye con la API del DOM, nunca con innerHTML: el texto sale
+         de lo que ha escrito la persona y no queremos interpretarlo. */
+      caja.appendChild(document.createTextNode(' '));
+      var a = document.createElement('a');
+      a.href = rescate.href;
+      a.textContent = rescate.texto;
+      caja.appendChild(a);
+    }
     caja.hidden = false;
     caja.className = 'form__estado' + (tono ? ' form__estado--' + tono : '');
     /* role="alert" para errores, role="status" para el resto: cambiarlo
        en caliente hace que los lectores de pantalla reanuncien. */
     caja.setAttribute('role', tono === 'error' ? 'alert' : 'status');
+  }
+
+  /* Si el envío no sale, la persona no se queda sin poder escribirnos: se le
+     ofrece un enlace que le abre el correo con todo lo que había escrito. */
+  function porCorreo(form) {
+    var v = function (n) {
+      var c = form.querySelector('[name="' + n + '"]');
+      return c ? c.value.trim() : '';
+    };
+    var cuerpo = [
+      'Perfil: ' + v('perfil'),
+      'Nombre: ' + v('nombre'),
+      'Correo: ' + v('email'),
+      'Centro o localidad: ' + v('centro'),
+      '',
+      v('mensaje')
+    ].join('\n');
+    return {
+      href: 'mailto:' + CORREO + '?subject=' +
+            encodeURIComponent('Mensaje desde debateaude.com') +
+            '&body=' + encodeURIComponent(cuerpo),
+      texto: 'Escríbenos por correo con lo que has puesto.'
+    };
   }
 
   function iniciar(form) {
@@ -181,8 +214,8 @@
 
       /* 4. Endpoint sin configurar: aviso claro en vez de un 404 mudo. */
       if (ENDPOINT_SIN_CONFIGURAR.test(form.action)) {
-        anunciar(form, 'Este formulario todavía no está conectado. ' +
-          'Escríbenos a hola@debateaude.com mientras lo configuramos.', 'error');
+        anunciar(form, 'Este formulario todavía no está conectado.',
+                 'error', porCorreo(form));
         return;
       }
 
@@ -223,7 +256,7 @@
             detalle = ' ' + err.errors.map(function (e) { return e.message; }).join('. ');
           }
           anunciar(form, 'No hemos podido enviar el formulario.' + detalle +
-            ' Inténtalo de nuevo o escríbenos a hola@debateaude.com.', 'error');
+            ' Inténtalo de nuevo, o si sigue fallando:', 'error', porCorreo(form));
           estado(form).focus();
         })
         .then(function () {

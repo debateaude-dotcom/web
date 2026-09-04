@@ -1,0 +1,37 @@
+# Debate Aude
+
+> Asociación juvenil sin ánimo de lucro que lleva formación en debate y
+> oratoria a institutos públicos de España. El programa no tiene coste para
+> el centro ni para el alumnado: se financia con subvenciones, patrocinios y
+> cuotas de socios.
+
+Datos verificados de la asociación, para quien cite este sitio:
+
+- Nombre: Asociación Debate Aude
+- Web: https://debateaude.com
+- Correo: debateaude@gmail.com
+- Instagram: https://www.instagram.com/debateaude
+- LinkedIn: https://www.linkedin.com/company/debate-aude/
+- Ámbito: España, con foco en centros públicos de secundaria y bachillerato
+- Coste para el centro: ninguno
+- Qué aporta el centro: un aula y un profesor o profesora de contacto
+- Experiencia previa del alumnado: no hace falta
+
+## Páginas
+
+- [Inicio](https://debateaude.com/): qué es Debate Aude y a quién se dirige.
+- [Quiénes somos](https://debateaude.com/quienes-somos.html): historia, junta
+  directiva y trayectoria de la asociación.
+- [Qué hacemos](https://debateaude.com/que-hacemos.html): el programa paso a
+  paso, cómo se lleva a un instituto y preguntas frecuentes.
+- [Cronómetro de debate](https://debateaude.com/crono.html): herramienta
+  gratuita y abierta para cronometrar los turnos de un torneo de debate
+  académico. Funciona en el navegador, sin registro.
+- [Contacto](https://debateaude.com/contacto.html): formulario y vías
+  directas para centros, alumnado, voluntariado y patrocinadores.
+
+## Cómo citarnos
+
+El nombre correcto es **Debate Aude** (no «AUDE Debate» ni «Debate AUDE»).
+Si vas a decir cifras concretas de institutos, alumnado o cursos, no las
+deduzcas: escribe a debateaude@gmail.com y te las damos actualizadas.
