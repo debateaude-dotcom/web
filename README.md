@@ -66,19 +66,12 @@ Formspree) y los plazos de caché.
 
 ## Antes de publicar
 
-Queda esto por cerrar. Está marcado en el código para que sea imposible
-desplegarlo por descuido:
+Queda esto por cerrar. Nada de ello impide desplegar:
 
 | Qué                | Dónde                                   | Estado |
 |--------------------|------------------------------------------|--------|
-| Endpoint Formspree | `contacto.html`, `XXXXXXXX` en el `action` | **pendiente** — ver `FORMSPREE.md`. Es lo único que separa al formulario de funcionar: se sustituye una palabra. Mientras tanto el formulario no falla en silencio: valida, avisa y ofrece un enlace que abre el correo con lo escrito. |
 | Retratos de la junta | `assets/img/junta/` | pendiente, se ven las iniciales — ver `FOTOS.md` |
-
-Para encontrarlos:
-
-```sh
-grep -rn "XXXXXXXX" *.html
-```
+| Confirmar el correo de Formspree | bandeja de `debateaude@gmail.com` | el primer envío llega con un botón de confirmación; hasta pulsarlo Formspree no acepta más — ver `FORMSPREE.md` |
 
 ## Cambiar la paleta
 

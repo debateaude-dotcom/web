@@ -122,13 +122,16 @@
     if (!caja) return;
     caja.textContent = texto;
     if (rescate) {
-      /* Se construye con la API del DOM, nunca con innerHTML: el texto sale
-         de lo que ha escrito la persona y no queremos interpretarlo. */
-      caja.appendChild(document.createTextNode(' '));
+      /* Se construye con la API del DOM, nunca con innerHTML: el href lleva
+         dentro lo que ha escrito la persona y no queremos interpretarlo.
+         La dirección va escrita entera y visible, para quien prefiera
+         copiarla en vez de pulsar el enlace. */
+      caja.appendChild(document.createTextNode(' ' + rescate.antes + ' '));
       var a = document.createElement('a');
       a.href = rescate.href;
       a.textContent = rescate.texto;
       caja.appendChild(a);
+      caja.appendChild(document.createTextNode(rescate.despues));
     }
     caja.hidden = false;
     caja.className = 'form__estado' + (tono ? ' form__estado--' + tono : '');
@@ -156,7 +159,9 @@
       href: 'mailto:' + CORREO + '?subject=' +
             encodeURIComponent('Mensaje desde debateaude.com') +
             '&body=' + encodeURIComponent(cuerpo),
-      texto: 'Escríbenos por correo con lo que has puesto.'
+      antes: 'Escríbenos a',
+      texto: CORREO,
+      despues: ': este enlace abre tu correo con lo que has puesto.'
     };
   }
 

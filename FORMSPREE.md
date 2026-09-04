@@ -1,8 +1,12 @@
-# Alta en Formspree y dónde pegar el endpoint
+# Formspree: cómo está montado el formulario
 
 El formulario de la web envía a Formspree. No hace falta backend ni claves
 secretas: el endpoint es público por diseño, y la protección antispam va por
 honeypot, trampa de tiempo y el filtro del propio Formspree.
+
+> **Estado: configurado.** El endpoint es `https://formspree.io/f/xaeyboeo`
+> y está puesto en `contacto.html`. Lo de abajo queda como referencia por si
+> algún día hay que rehacerlo o cambiar el correo de destino.
 
 ## 1. Crear la cuenta
 
@@ -27,28 +31,31 @@ https://formspree.io/f/mzbqwxyz
                       este es el ID
 ```
 
-## 3. Dónde pegarlo
+## 3. Dónde va pegado
 
-Sólo hay **un** sitio que tocar, en `contacto.html`:
+Sólo hay **un** sitio, en `contacto.html`:
 
 ```html
-<form class="js-form" action="https://formspree.io/f/XXXXXXXX" ...>
+<form class="js-form" action="https://formspree.io/f/xaeyboeo" ...>
 ```
 
-Sustituye `XXXXXXXX` por tu ID. Para encontrarlo:
+Para encontrarlo:
 
 ```sh
 grep -n "formspree.io/f/" contacto.html
 ```
 
-Si despliegas sin hacerlo, el formulario lo detecta y avisa en pantalla en vez
-de fallar en silencio.
+Si alguna vez se despliega con el marcador `XXXXXXXX` en vez de un ID de
+verdad, el formulario lo detecta y avisa en pantalla en vez de fallar en
+silencio, y ofrece un enlace que abre el correo con lo que la persona había
+escrito.
 
 ## 4. Primer envío y dominio
 
 - El **primer** mensaje llega con un botón de confirmación en el correo. Hasta
-  que no lo pulses, Formspree no acepta más envíos. Manda una prueba tú mismo
-  nada más desplegar.
+  que no lo pulses, Formspree no acepta más envíos. **Si aún no se ha hecho,
+  esto es lo primero:** manda una prueba desde `debateaude.com/contacto.html`,
+  abre el correo que llega a `debateaude@gmail.com` y pulsa el botón.
 - En **Form Settings → Allowed domains**, añade `debateaude.com` y
   `www.debateaude.com`. Así nadie puede usar vuestro endpoint desde otra web
   para gastaros la cuota.
